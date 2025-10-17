@@ -54,7 +54,7 @@ public class Player : Character
         if (isAttacking) {
             animator.SetTrigger("Attack");
             //edit to Idestoryable
-            var e = InFront as Enemy;
+            var e = InFront as IDestoryable;
             if (e != null)
             {
                 e.TakeDamage(Damage);
