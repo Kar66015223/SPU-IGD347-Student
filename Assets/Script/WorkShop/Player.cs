@@ -33,8 +33,7 @@ public class Player : Character
     public void AddItem(Item item) {
         inventory.Add(item);
     }
-   
-
+    
     private void HandleInput()
     {
         float x = Input.GetAxis("Horizontal");
@@ -53,8 +52,7 @@ public class Player : Character
     public void Attack(bool isAttacking) {
         if (isAttacking) {
             animator.SetTrigger("Attack");
-            //edit to Idestoryable
-            var e = InFront as Enemy;
+            var e = InFront as Idestoryable;
             if (e != null)
             {
                 e.TakeDamage(Damage);
@@ -75,5 +73,7 @@ public class Player : Character
 
         }
     }
+    //เพิ่มเติมฟังก์ชันการรักษาและรับความเสียหาย
+    
 
 }
