@@ -74,6 +74,16 @@ public class Player : Character
         }
     }
     //เพิ่มเติมฟังก์ชันการรักษาและรับความเสียหาย
-    
 
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+        GameManager.instance.UpdateHealthBar(health, maxHealth);
+    }
+
+    public override void Heal(int amount)
+    {
+        base.Heal(amount);
+        GameManager.instance.UpdateHealthBar(health, maxHealth);
+    }
 }
