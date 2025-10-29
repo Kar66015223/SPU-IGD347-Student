@@ -2,9 +2,23 @@ using UnityEngine;
 using System.Collections.Generic;
 
 // กำหนดให้เป็น sealed เพื่อป้องกันการสืบทอด
-public class SoundManager : MonoBehaviour
+public sealed class SoundManager : MonoBehaviour
 {
-   
+    // 1. Singleton Instance
+    private static SoundManager _instance;
+
+    // 2. Public Static Property (Global Access Point)
+    public static SoundManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("SoundManager instance is null! Is it in the scene?");
+            }
+            return _instance;
+        }
+    }
 
     [Header("Audio Sources")]
     // Audio Source สำหรับเพลงประกอบ (Looping)
@@ -17,7 +31,27 @@ public class SoundManager : MonoBehaviour
     public AudioClip defaultBackgroundMusic;
 
     // 3. Singleton Initialization
- 
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            // ตรวจสอบและเพิ่ม Audio Source หากยังไม่มี
+            if (musicSource == null) musicSource = gameObject.AddComponent<AudioSource>();
+            if (sfxSource == null) sfxSource = gameObject.AddComponent<AudioSource>();
+
+            // ตั้งค่าพื้นฐาน
+            musicSource.loop = true; // เพลงประกอบมักจะวนซ้ำ
+
+            PlayMusic(defaultBackgroundMusic);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // ------------------- Music Controls -------------------
 

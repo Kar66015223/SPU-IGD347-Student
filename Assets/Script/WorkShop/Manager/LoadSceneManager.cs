@@ -2,15 +2,47 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement; // สำคัญมากสำหรับ Scene Management
 
-public class LoadSceneManager : MonoBehaviour
+public sealed class LoadSceneManager : MonoBehaviour
 {
     // 1. Singleton Instance
-   
+    private static LoadSceneManager _instance;
+
+    // 2. Global Access Point
+    public static LoadSceneManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("LoadSceneManager instance is null! Is it in the scene?");
+            }
+            return _instance;
+        }
+    }
+
     [Header("Loading Screen Reference")]
     public GameObject loadingScreenPanel; // อ้างอิงถึง Panel ที่ใช้เป็นหน้าจอโหลด
 
     // 3. Singleton Initialization
- 
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            // ป้องกันไม่ให้ Object นี้ถูกทำลายเมื่อโหลด Scene ใหม่
+            DontDestroyOnLoad(gameObject);
+
+            // ซ่อนหน้าจอโหลดไว้ก่อน
+            if (loadingScreenPanel != null)
+            {
+                loadingScreenPanel.SetActive(false);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // ------------------- Core Functionality -------------------
 
