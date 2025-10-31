@@ -7,7 +7,8 @@ namespace Theory.Week10
     {
         Sword,
         Bow,
-        Gun
+        Gun,
+        Axe
     }
 
     public class Weapon : MonoBehaviour
@@ -21,6 +22,4 @@ namespace Theory.Week10
             BaseDamage = baseDamage;
         }
     }
-
-   
 }
