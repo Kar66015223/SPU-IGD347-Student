@@ -39,6 +39,12 @@ public class Character : Identity, Idestoryable
         health -= amount;
         if (health <= 0) {
             OnDestory?.Invoke(this);
+
+            if (gameObject.tag != "Player")
+            {
+                GameManager.instance.AddScore(10);
+            }
+
             Destroy(gameObject);
         }
     }
